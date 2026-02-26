@@ -6,8 +6,22 @@
     <div class="py-8 max-w-7xl mx-auto px-4">
         @include('partials.alerts')
 
+        @forelse($facilities as $facility)
+
+        {{-- Status Filter --}}
+        @if(auth()->user()->isAdmin())
+            <form action="{{ route('facilities.create') }}" method="GET" class="mb-4">
+                <button type="submit"
+                    class="px-3 py-1 rounded text-sm border
+                        {{ request()->routeIs('facilities.create')
+                        ? 'bg-blue-600 text-white'
+                        : 'bg-white text-gray-700' }}">
+                    Add Facility
+                </button>
+            </form>
+        @endif
+
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-            @forelse($facilities as $facility)
                 <div class="bg-white rounded-lg shadow p-6">
                     <h3 class="text-lg font-bold text-gray-900">{{ $facility->name }}</h3>
                     <p class="text-sm text-gray-500 capitalize mt-1">{{ $facility->category }}</p>
@@ -37,9 +51,8 @@
                 </div>
             @empty
                 <p class="text-gray-500 col-span-3">No facilities found.</p>
-            @endforelse
         </div>
-
+        @endforelse
         <div class="mt-6">{{ $facilities->links() }}</div>
     </div>
 </x-app-layout>
