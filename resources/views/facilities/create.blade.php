@@ -6,7 +6,8 @@
     <div class="py-8 max-w-2xl mx-auto px-4">
         @include('partials.alerts')
 
-        <form action="{{ route('facilities.store') }}" method="POST" class="bg-white rounded-lg shadow p-6 space-y-4">
+        <form action="{{ route('facilities.store') }}" method="POST" enctype="multipart/form-data"
+            class="bg-white dark:bg-gray-800 rounded-lg shadow p-6 space-y-4">
             @csrf
 
             <div>
@@ -36,6 +37,14 @@
                 <label class="block text-sm font-medium text-gray-700">Description</label>
                 <textarea name="description" rows="3"
                           class="mt-1 w-full border-gray-300 rounded-md shadow-sm">{{ old('description') }}</textarea>
+            </div>
+
+            <div>
+                <label class="block text-sm font-medium text-gray-700 dark:text-gray-200">
+                    Facility Image
+                </label>
+                <input type="file" name="image"
+                    class="mt-1 w-full text-sm text-gray-700 dark:text-gray-200">
             </div>
 
             <button type="submit"
