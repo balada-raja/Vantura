@@ -8,8 +8,7 @@ use Illuminate\Http\Request;
 class FacilityController extends Controller
 {
     private array $categories = [
-        'meeting room', 'theater', 'gym',
-        'billiard', 'pingpong', 'communal space', 'band room'
+        'meeting room', 'gym', 'Game', 'communal space', 'other room'
     ];
 
     public function index()
@@ -31,11 +30,18 @@ class FacilityController extends Controller
             'category'    => 'required|in:' . implode(',', $this->categories),
             'capacity'    => 'required|integer|min:1',
             'description' => 'nullable|string',
+            'image'       => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
         ]);
+
+        if ($request->hasFile('image')) {
+            $validated['image'] = $request->file('image')
+                ->store('facilities', 'public');
+        }
 
         Facility::create($validated);
 
-        return redirect()->route('facilities.index')->with('success', 'Facility created.');
+        return redirect()->route('facilities.index')
+            ->with('success', 'Facility created.');
     }
 
     public function show(Facility $facility)
