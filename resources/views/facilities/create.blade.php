@@ -34,6 +34,31 @@
             </div>
 
             <div>
+                <label class="block text-sm font-medium text-gray-700 dark:text-gray-200">
+                    Booking Type
+                </label>
+
+                <select name="type"
+                    class="mt-1 w-full border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700
+               text-gray-900 dark:text-gray-100
+               rounded-md shadow-sm focus:ring focus:ring-blue-200">
+
+                <option value="exclusive" {{ old('type') === 'exclusive' ? 'selected' : '' }}>
+                    Exclusive (Cannot Share Time Slot)
+                </option>
+
+                <option value="shared" {{ old('type') === 'shared' ? 'selected' : '' }}>
+                    Shared (Capacity Based)
+                </option>
+
+                </select>
+
+                @error('type')
+                <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                @enderror
+            </div>
+
+            <div>
                 <label class="block text-sm font-medium text-gray-700">Description</label>
                 <textarea name="description" rows="3"
                           class="mt-1 w-full border-gray-300 rounded-md shadow-sm">{{ old('description') }}</textarea>
